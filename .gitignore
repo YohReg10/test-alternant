@@ -1,1 +1,8 @@
+# Dépendances Node.js
 node_modules
+
+# Dossier généré par Next.js
+.next
+
+# Environnements
+.env

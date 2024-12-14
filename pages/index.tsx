@@ -1,12 +1,10 @@
-// pages/index.tsx
 import React from 'react';
+import Header from "../components/Header";
 
-const HomePage: React.FC = () => {
+export default function HomePage() {
   return (
-    <div>
-      <h1>Bienvenue sur mon site !</h1>
+    <div className='bg-blue-50 text-white p-4'>
+      <Header />
     </div>
   );
-};
-
-export default HomePage;
+}

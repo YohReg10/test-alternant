@@ -4,9 +4,9 @@ import Results from "../components/Results";
 
 function HomePage() {
     return (
-        <div id="layout-page">
+        <div id="layout-page" className="bg-blue-50 h-screen">
             {/* Header et ruban supérieur */}
-            <div id="header-ruban" className="bg-blue-50 text-black">
+            <div id="header-ruban" className="text-black">
                 <Header />
                 <h1 className="text-center text-3xl p-3">
                     <strong>Activités et Aventures à Montpellier</strong>

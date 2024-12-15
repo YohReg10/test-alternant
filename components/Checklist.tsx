@@ -2,7 +2,7 @@ function Checklist() {
     return (
         <div
             id="checklist-section"
-            className="w-1/2 bg-white shadow-md p-4 rounded-lg mr-4"
+            className="w-full bg-white shadow-md p-0 rounded-lg mr-0"
         >
             <h2 className="text-xl font-bold mb-4">Checklist</h2>
             <ul className="list-disc pl-5">

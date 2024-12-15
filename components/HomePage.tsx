@@ -16,12 +16,12 @@ function HomePage() {
             {/* Contenu principal du site */}
             <div id="site-content" className="flex flex-row gap-4 p-4">
                 {/* Section gauche : Checklist */}
-                <div id="checklist-section" className="w-1/2">
+                <div id="checklist-section" className="w-1/4">
                     <Checklist />
                 </div>
 
                 {/* Section droite : Résultats */}
-                <div id="results-section" className="w-1/2">
+                <div id="results-section" className="w-3/4">
                     <Results />
                 </div>
             </div>

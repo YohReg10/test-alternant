@@ -17,7 +17,7 @@ function Checklist() {
       className="w-full bg-white shadow-md p-4 rounded-lg"
     >
       <h2 className="text-xl font-bold mb-4">Distances</h2>
-      <ul className="list-none pl-0">
+      <ul className="list-none pl-0 flex space-x-6">
         <li className="flex items-center mb-2">
           <input
             type="checkbox"
@@ -40,7 +40,7 @@ function Checklist() {
           />
           <label htmlFor="item2" className="leading-5">&lt;15km</label>
         </li>
-        <li className="flex items-center">
+        <li className="flex items-center mb-2">
           <input
             type="checkbox"
             id="item3"

@@ -1,7 +1,7 @@
 function Header() {
     return (
       <header className="flex justify-between items-center bg-gray-200 w-full">
-        <div className="flex">
+        <div className="flex w-full">
           <div className="w-1/3">
             <img
               src="/images/beach.jpg"

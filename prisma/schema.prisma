@@ -14,8 +14,10 @@ datasource db {
 }
 
 model Activity {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String
-  type        String
+  id          Int      @id @default(autoincrement()) // Clé primaire auto-incrémentée
+  title       String   @db.VarChar(255)             // Colonne VARCHAR de 255 caractères
+  description String   @db.Text                     // Colonne TEXT
+  type        String   @db.VarChar(50)              // Colonne VARCHAR de 50 caractères
+  createdAt   DateTime @default(now())              // Ajoute un timestamp pour la création
+  updatedAt   DateTime @updatedAt                   // Met à jour automatiquement le timestamp
 }

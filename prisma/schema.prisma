@@ -1,23 +1,21 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "mysql" // Mets ici ton fournisseur de base de données (ex: mysql, sqlite, postgresql, etc.)
+  url      = env("DATABASE_URL") // Ton URL de connexion à la base de données
 }
 
 model Activity {
-  id          Int      @id @default(autoincrement()) // Clé primaire auto-incrémentée
-  title       String   @db.VarChar(255)             // Colonne VARCHAR de 255 caractères
-  description String   @db.Text                     // Colonne TEXT
-  type        String   @db.VarChar(50)              // Colonne VARCHAR de 50 caractères
-  createdAt   DateTime @default(now())              // Ajoute un timestamp pour la création
-  updatedAt   DateTime @updatedAt                   // Met à jour automatiquement le timestamp
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        String
+  location    String
+  distance    Float
+  environment String
+  url         String
+  createdAt   DateTime @default(now())
 }

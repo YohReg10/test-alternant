@@ -1,25 +1,21 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
+  provider = "mysql" // Mets ici ton fournisseur de base de données (ex: mysql, sqlite, postgresql, etc.)
+  url      = env("DATABASE_URL") // Ton URL de connexion à la base de données
 }
 
 model Activity {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String
+  id          Int      @id @default(autoincrement())
+  name        String
   type        String
+  location    String
+  distance    Float
+  environment String
+  url         String
+  createdAt   DateTime @default(now())
 }

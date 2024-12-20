@@ -8,7 +8,6 @@ function Results() {
       try {
         const response = await fetch('/api/activities');
         const data = await response.json();
-        console.log('Données récupérées :', data); // Vérifie que les champs sont bien là
         setActivities(data);
       } catch (error) {
         console.error('Error fetching activities:', error);

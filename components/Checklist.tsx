@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 
 function Checklist() {
-  // Crée un état pour l'élément coché
   const [checkedItem, setCheckedItem] = useState(null);
 
-  // Fonction pour gérer le changement de checkbox
   const handleChange = (event) => {
-    // Si l'élément est coché, on met à jour l'état
     const value = event.target.checked ? event.target.value : null;
     setCheckedItem(value);
   };
@@ -14,11 +11,11 @@ function Checklist() {
   return (
     <div
       id="checklist-section"
-      className="w-full bg-white shadow-md p-4 rounded-lg"
+      className="w-full max-w-full bg-white shadow-md p-4 rounded-lg overflow-x-auto"
     >
       <h2 className="text-xl font-bold mb-4">Distances</h2>
-      <ul className="list-none pl-0 flex space-x-6">
-        <li className="flex items-center mb-2">
+      <ul className="list-none pl-0 flex flex-col sm:flex-row sm:space-x-6 w-full">
+        <li className="flex items-center mb-2 w-full sm:w-auto">
           <input
             type="checkbox"
             id="item1"
@@ -29,7 +26,7 @@ function Checklist() {
           />
           <label htmlFor="item1" className="leading-5">&lt;5km</label>
         </li>
-        <li className="flex items-center mb-2">
+        <li className="flex items-center mb-2 w-full sm:w-auto">
           <input
             type="checkbox"
             id="item2"
@@ -40,7 +37,7 @@ function Checklist() {
           />
           <label htmlFor="item2" className="leading-5">&lt;15km</label>
         </li>
-        <li className="flex items-center mb-2">
+        <li className="flex items-center mb-2 w-full sm:w-auto">
           <input
             type="checkbox"
             id="item3"

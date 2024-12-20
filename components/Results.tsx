@@ -13,28 +13,28 @@ function Results({ filters }) {
         console.error('Error fetching activities:', error);
       }
     };
-    
+
     fetchActivities();
   }, []);
 
   // Fonction de filtrage
   const filterActivities = () => {
-    if (filters.length === 0) return activities;
+    if (!filters) return activities; // Si aucun filtre n'est sélectionné
 
     return activities.filter((activity) => {
       const activityDistance = parseFloat(activity.distance); // Assure-toi que la distance est un nombre
-      return filters.some((filter) => {
-        switch (filter) {
-          case "<5km":
-            return activityDistance < 5;
-          case "5-10km":
-            return activityDistance >= 5 && activityDistance < 10;
-          case "10-20km":
-            return activityDistance >= 10 && activityDistance < 20;
-          default:
-            return true;
-        }
-      });
+      switch (filters) {
+        case "<5km":
+          return activityDistance < 5;
+        case "5-15km":
+          return activityDistance >= 5 && activityDistance < 15;
+        case "15-25km":
+          return activityDistance >= 15 && activityDistance < 25;
+        case ">25km":
+          return activityDistance >= 25;
+        default:
+          return true;
+      }
     });
   };
 

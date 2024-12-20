@@ -8,7 +8,6 @@ function Results() {
       try {
         const response = await fetch('/api/activities');
         const data = await response.json();
-        console.log('Données récupérées :', data); // Vérifie que les champs sont bien là
         setActivities(data);
       } catch (error) {
         console.error('Error fetching activities:', error);
@@ -36,7 +35,6 @@ function Results() {
               <p className="text-gray-600">Location: {activity.location}</p>
               <p className="text-gray-600">Type: {activity.type}</p>
 
-              {/* Affichage de l'image */}
               {activity.url_img && (
                 <img
                   src={activity.url_img}
@@ -45,7 +43,6 @@ function Results() {
                 />
               )}
 
-              {/* Lien vers l'activité */}
               {activity.url_site && (
                 <a
                   href={activity.url_site}

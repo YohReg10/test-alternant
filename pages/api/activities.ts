@@ -22,9 +22,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
       })
 
-      // Afficher les activités récupérées dans la console
-      console.log('Activités récupérées:', activities)
-
       // Renvoie les données sous forme de JSON
       res.status(200).json(activities)
     } catch (error) {

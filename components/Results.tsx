@@ -1,38 +1,67 @@
+import { useEffect, useState } from 'react';
+
 function Results() {
-    return (
-        <section id="results-section" className="w-full bg-gray-100 shadow-md p-4 rounded-lg ml-4">
-            {/* Titre de la section */}
-            <h2 className="text-xl font-bold mb-4">Résultats</h2>
-            
-            {/* Paragraphe ou description générale */}
-            <p className="text-gray-700 mb-4">
-                Les résultats de votre recherche apparaîtront ici.
-            </p>
+  const [activities, setActivities] = useState([]);
 
-            {/* Conteneur des résultats sous forme de cartes */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {/* Exemple de résultat avec une image et un lien */}
-                <div className="result-item">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                        <img src="https://via.placeholder.com/300" alt="Entreprise 1" className="w-full h-auto rounded-lg"/>
-                    </a>
-                    <h3 className="text-lg font-semibold mt-2">Entreprise 1</h3>
-                    <p className="text-gray-600">Description rapide de l'entreprise.</p>
-                </div>
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch('/api/activities');
+        const data = await response.json();
+        console.log('Données récupérées :', data); // Vérifie que les champs sont bien là
+        setActivities(data);
+      } catch (error) {
+        console.error('Error fetching activities:', error);
+      }
+    };
+    
+    fetchActivities(); 
+  }, []);
 
-                {/* Un autre exemple de résultat */}
-                <div className="result-item">
-                    <a href="#" target="_blank" rel="noopener noreferrer">
-                        <img src="https://via.placeholder.com/300" alt="Entreprise 2" className="w-full h-auto rounded-lg"/>
-                    </a>
-                    <h3 className="text-lg font-semibold mt-2">Entreprise 2</h3>
-                    <p className="text-gray-600">Description rapide de l'entreprise.</p>
-                </div>
+  return (
+    <section id="results-section" className="w-full bg-gray-100 shadow-md p-4 rounded-lg ml-4">
+      <h2 className="text-xl font-bold mb-4">Résultats</h2>
 
-                {/* Ajouter plus de résultats ici */}
+      <p className="text-gray-700 mb-4">
+        Les résultats de votre recherche apparaîtront ici.
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {activities.length === 0 ? (
+          <p>Chargement des activités...</p>
+        ) : (
+          activities.map((activity) => (
+            <div key={activity.id} className="result-item p-4 border rounded-lg">
+              <h3 className="text-lg font-semibold mt-2">{activity.name}</h3>
+              <p className="text-gray-600">Location: {activity.location}</p>
+              <p className="text-gray-600">Type: {activity.type}</p>
+
+              {/* Affichage de l'image */}
+              {activity.url_img && (
+                <img
+                  src={activity.url_img}
+                  alt={`Image de l'activité ${activity.name}`}
+                  className="w-full h-32 object-cover mt-2"
+                />
+              )}
+
+              {/* Lien vers l'activité */}
+              {activity.url_site && (
+                <a
+                  href={activity.url_site}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline mt-2 block"
+                >
+                  Voir l'activité
+                </a>
+              )}
             </div>
-        </section>
-    );
+          ))
+        )}
+      </div>
+    </section>
+  );
 }
 
 export default Results;

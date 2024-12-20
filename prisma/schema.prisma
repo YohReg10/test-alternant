@@ -1,21 +1,20 @@
-// prisma/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql" // Mets ici ton fournisseur de base de données (ex: mysql, sqlite, postgresql, etc.)
-  url      = env("DATABASE_URL") // Ton URL de connexion à la base de données
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-model Activity {
-  id          Int      @id @default(autoincrement())
+model activity {
+  id          Int    @id @default(autoincrement())
   name        String
   type        String
   location    String
-  distance    Float
+  distance    String
   environment String
-  url         String
-  createdAt   DateTime @default(now())
+  sensation   Int
+  url_site    String
+  url_img     String
 }

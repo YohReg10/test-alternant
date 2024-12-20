@@ -1,8 +1,13 @@
+import { useState } from 'react';
 import Header from "../components/Header";
 import Checklist from "../components/Checklist";
 import Results from "../components/Results";
 
 function HomePage() {
+    const [filters, setFilters] = useState([]);
+    const handleFilterChange = (newFilters) => {
+        setFilters(newFilters);
+      };
     return (
         <div id="layout-page" className="bg-blue-50 h-screen">
             {/* Header et ruban supérieur */}
@@ -17,12 +22,12 @@ function HomePage() {
             <div id="site-content" className="flex flex-row gap-4 p-4">
                 {/* Section gauche : Checklist */}
                 <div id="checklist-section" className="w-1/4">
-                    <Checklist />
+                    <Checklist  onFilterChange={handleFilterChange} />
                 </div>
 
                 {/* Section droite : Résultats */}
                 <div id="results-section" className="w-3/4">
-                    <Results />
+                    <Results filters={filters}  />
                 </div>
             </div>
         </div>

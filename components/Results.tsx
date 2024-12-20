@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function Results() {
+function Results({ filters }) {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -14,8 +14,31 @@ function Results() {
       }
     };
     
-    fetchActivities(); 
+    fetchActivities();
   }, []);
+
+  // Fonction de filtrage
+  const filterActivities = () => {
+    if (filters.length === 0) return activities;
+
+    return activities.filter((activity) => {
+      const activityDistance = parseFloat(activity.distance); // Assure-toi que la distance est un nombre
+      return filters.some((filter) => {
+        switch (filter) {
+          case "<5km":
+            return activityDistance < 5;
+          case "5-10km":
+            return activityDistance >= 5 && activityDistance < 10;
+          case "10-20km":
+            return activityDistance >= 10 && activityDistance < 20;
+          default:
+            return true;
+        }
+      });
+    });
+  };
+
+  const filteredActivities = filterActivities();
 
   return (
     <section id="results-section" className="w-full bg-gray-100 shadow-md p-4 rounded-lg ml-4">
@@ -26,10 +49,10 @@ function Results() {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {activities.length === 0 ? (
+        {filteredActivities.length === 0 ? (
           <p>Chargement des activités...</p>
         ) : (
-          activities.map((activity) => (
+          filteredActivities.map((activity) => (
             <div key={activity.id} className="result-item p-4 border rounded-lg">
               <h3 className="text-lg font-semibold mt-2">{activity.name}</h3>
               <p className="text-gray-600">Location: {activity.location}</p>

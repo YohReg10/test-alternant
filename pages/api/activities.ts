@@ -1,5 +1,3 @@
-// Création API
-
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
 
@@ -9,8 +7,24 @@ const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      // Récupère toutes les activités depuis la base de données
-      const activities = await prisma.activity.findMany()
+      // Sélection explicite des champs pour éviter tout oubli
+      const activities = await prisma.activity.findMany({
+        select: {
+          id: true,
+          name: true,
+          type: true,
+          location: true,
+          distance: true,
+          environment: true,
+          sensation: true,
+          url_site: true,    // Assure-toi que l'URL est bien sélectionnée
+          url_img: true // Assure-toi que l'URL de l'image est bien sélectionnée
+        }
+      })
+
+      // Afficher les activités récupérées dans la console
+      console.log('Activités récupérées:', activities)
+
       // Renvoie les données sous forme de JSON
       res.status(200).json(activities)
     } catch (error) {

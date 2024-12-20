@@ -7,13 +7,14 @@ function Results() {
     const fetchActivities = async () => {
       try {
         const response = await fetch('/api/activities');
-        const data = await response.json(); 
-        setActivities(data); 
+        const data = await response.json();
+        console.log('Données récupérées :', data); // Vérifie que les champs sont bien là
+        setActivities(data);
       } catch (error) {
         console.error('Error fetching activities:', error);
       }
     };
-
+    
     fetchActivities(); 
   }, []);
 
@@ -33,9 +34,28 @@ function Results() {
             <div key={activity.id} className="result-item p-4 border rounded-lg">
               <h3 className="text-lg font-semibold mt-2">{activity.name}</h3>
               <p className="text-gray-600">Location: {activity.location}</p>
-              <a href={activity.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline mt-2 block">
-                Voir l'activité
-              </a>
+              <p className="text-gray-600">Type: {activity.type}</p>
+
+              {/* Affichage de l'image */}
+              {activity.url_img && (
+                <img
+                  src={activity.url_img}
+                  alt={`Image de l'activité ${activity.name}`}
+                  className="w-full h-32 object-cover mt-2"
+                />
+              )}
+
+              {/* Lien vers l'activité */}
+              {activity.url_site && (
+                <a
+                  href={activity.url_site}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline mt-2 block"
+                >
+                  Voir l'activité
+                </a>
+              )}
             </div>
           ))
         )}

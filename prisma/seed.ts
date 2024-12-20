@@ -137,8 +137,6 @@ async function main() {
       }
     ]
   })
-
-  console.log('Data has been added to the database')
 }
 
 main()

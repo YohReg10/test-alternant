@@ -8,12 +8,13 @@ datasource db {
 }
 
 model activity {
-  id          Int      @id @default(autoincrement())
-  type        String
-  createdAt   DateTime @default(now())
-  distance    Float
-  environment String
-  location    String
+  id          Int    @id @default(autoincrement())
   name        String
-  url         String
+  type        String
+  location    String
+  distance    String
+  environment String
+  sensation   Int
+  url_site    String
+  url_img     String
 }

@@ -9,7 +9,7 @@ async function main() {
         name: 'Nature en mouvement',
         type: 'canyoning',
         location: 'Montpellier',
-        distance: '0',
+        distance: 0, // Utilisation d'un nombre et non d'une chaîne
         environment: 'Exterieur',
         sensation: 2,
         url_site: 'https://nature-en-mouvement.com/',
@@ -19,7 +19,7 @@ async function main() {
         name: 'Alteo nature',
         type: 'canyoning',
         location: 'Prades-le-Lez',
-        distance: '14,4',
+        distance: 14.4, // Utilisation d'un nombre à virgule flottante
         environment: 'Exterieur',
         sensation: 2,
         url_site: 'https://www.alteo-nature.com/',
@@ -29,7 +29,7 @@ async function main() {
         name: 'MadMonkey',
         type: 'escalade',
         location: 'Montpellier',
-        distance: '0',
+        distance: 0, // Utilisation d'un nombre
         environment: 'Interieur',
         sensation: 2,
         url_site: 'https://madmonkey.fr/montpellier/',
@@ -39,7 +39,7 @@ async function main() {
         name: 'Fort Boyard',
         type: 'escape game',
         location: 'Montpellier',
-        distance: '0',
+        distance: 0, // Utilisation d'un nombre
         environment: 'Interieur',
         sensation: 1,
         url_site: 'https://www.fortboyardaventures.fr',
@@ -49,7 +49,7 @@ async function main() {
         name: 'LOL - Escape Game',
         type: 'escape game',
         location: 'Montpellier',
-        distance: '0',
+        distance: 0, // Utilisation d'un nombre
         environment: 'Interieur',
         sensation: 1,
         url_site: 'https://escapegame.lol',
@@ -59,7 +59,7 @@ async function main() {
         name: 'Rue des Vignerons',
         type: 'œnologie',
         location: 'Le Triadou',
-        distance: '22,5',
+        distance: 22.5, // Utilisation d'un nombre à virgule flottante
         environment: 'Interieur',
         sensation: 0,
         url_site: 'https://www.ruedesvignerons.com/fr/activite/4738/atelier-or-vert-et-rouge',
@@ -69,7 +69,7 @@ async function main() {
         name: 'Laser Game Evolution',
         type: 'laser game',
         location: 'Montpellier',
-        distance: '0',
+        distance: 0, // Utilisation d'un nombre
         environment: 'Interieur',
         sensation: 1,
         url_site: 'https://montpellier.lasergame-evolution.fr',
@@ -79,7 +79,7 @@ async function main() {
         name: 'Illucity',
         type: 'réalité virtuelle',
         location: 'Mauguio',
-        distance: '16',
+        distance: 16, // Utilisation d'un nombre
         environment: 'Interieur',
         sensation: 0,
         url_site: 'https://illucity.fr/lieux/montpellier-realite-virtuelle',
@@ -89,7 +89,7 @@ async function main() {
         name: 'Volensud',
         type: 'parapente',
         location: 'Montpellier',
-        distance: '0',
+        distance: 0, // Utilisation d'un nombre
         environment: 'Exterieur',
         sensation: 3,
         url_site: 'http://www.volensud.com/',
@@ -99,7 +99,7 @@ async function main() {
         name: 'Horizon Parapente',
         type: 'parapente',
         location: 'Saint-Mathieu-de-Trevier',
-        distance: '24',
+        distance: 24, // Utilisation d'un nombre
         environment: 'Exterieur',
         sensation: 3,
         url_site: 'http://horizon-parapente.fr/',
@@ -109,7 +109,7 @@ async function main() {
         name: 'CDL Degustation',
         type: 'œnologie',
         location: 'Castelneau-le-Lez',
-        distance: '7,2',
+        distance: 7.2, // Utilisation d'un nombre à virgule flottante
         environment: 'Interieur',
         sensation: 0,
         url_site: 'https://cdldegustation.fr',
@@ -119,7 +119,7 @@ async function main() {
         name: 'Plongée Carnon',
         type: 'plongée',
         location: 'Carnon',
-        distance: '15,4',
+        distance: 15.4, // Utilisation d'un nombre à virgule flottante
         environment: 'Exterieur',
         sensation: 1,
         url_site: 'http://www.plongeecarnon.com/',
@@ -129,7 +129,7 @@ async function main() {
         name: 'RockN River',
         type: 'canyoning',
         location: 'Saint Guilhem le Désert',
-        distance: '52,2',
+        distance: 52.2, // Utilisation d'un nombre à virgule flottante
         environment: 'Exterieur',
         sensation: 2,
         url_site: 'https://rocnriver.fr/',

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Header from "../components/Header";
 import Checklist from "../components/Checklist";
 import Results from "../components/Results";
+import SensationChecklist from "../components/SensationChecklist";
 
 function HomePage() {
   const [filters, setFilters] = useState(null); // On initialise filters à null
@@ -12,6 +13,7 @@ function HomePage() {
 
   return (
     <div id="layout-page" className="bg-blue-50 h-screen">
+
       {/* Header et ruban supérieur */}
       <div id="header-ruban" className="text-black">
         <Header />
@@ -22,9 +24,14 @@ function HomePage() {
 
       {/* Contenu principal du site */}
       <div id="site-content" className="flex flex-row gap-4 p-4">
-        {/* Section gauche : Checklist */}
-        <div id="checklist-section" className="w-1/4">
-          <Checklist onFilterChange={handleFilterChange} />
+
+         {/* Section gauche : Checklist (parent) */}
+         <div id="checklist-section" className="w-1/4">
+          <div className="flex flex-col gap-6">
+            {/* Enfant : Sensation Checklist */}
+            <Checklist onFilterChange={handleFilterChange} />
+            <SensationChecklist />
+          </div>
         </div>
 
         {/* Section droite : Résultats */}

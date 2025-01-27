@@ -22,7 +22,7 @@ function Results({ filters }) {
     if (!filters) return activities; // Si aucun filtre n'est sélectionné
 
     return activities.filter((activity) => {
-      const activityDistance = parseFloat(activity.distance); // Assure-toi que la distance est un nombre
+      const activityDistance = parseFloat(activity.distance);
       switch (filters) {
         case "<5km":
           return activityDistance < 5;
@@ -42,10 +42,14 @@ function Results({ filters }) {
 
   return (
     <section id="results-section" className="w-full bg-gray-100 shadow-md p-4 rounded-lg ml-4">
-      <h2 className="text-xl font-bold mb-4">Résultats</h2>
+      <h2 className="text-xl font-bold mb-4">Résultats :</h2>
 
+      {/* Affichage du nombre de résultats */}
       <p className="text-gray-700 mb-4">
-        Les résultats de votre recherche apparaîtront ici.
+        {filteredActivities.length > 0 
+          ? `Il y a ${filteredActivities.length} résultat${filteredActivities.length > 1 ? 's' : ''} correspondant${filteredActivities.length > 1 ? 's' : ''} à votre recherche.`
+          : 'Aucun résultat trouvé pour votre recherche.'
+        }
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

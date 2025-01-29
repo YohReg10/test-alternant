@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+   engineType      = "binary"
 }
 
 datasource db {
@@ -12,7 +13,7 @@ model activity {
   name        String
   type        String
   location    String
-  distance    String
+  distance    Float
   environment String
   sensation   Int
   url_site    String

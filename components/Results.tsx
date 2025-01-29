@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function Results() {
+function Results({ filters }) {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -10,32 +10,64 @@ function Results() {
         const data = await response.json();
         setActivities(data);
       } catch (error) {
-        console.error('Error fetching activities:', error);
+        console.error('❌ Erreur lors du fetch des activités :', error);
       }
     };
-    
-    fetchActivities(); 
+
+    fetchActivities();
   }, []);
+
+  const getDistanceRange = (filter) => {
+    if (!filter || filter === "null") return null;
+    if (filter.includes("<")) return [0, 5];
+    if (filter.includes(">")) return [50, Infinity];
+    const parts = filter.match(/\d+/g);
+    return parts && parts.length === 2 ? [parseFloat(parts[0]), parseFloat(parts[1])] : null;
+  };
+
+  const sensationMapping = {
+    "Légère": 0,
+    "Moyenne": 1,
+    "Forte": 2,
+    "Très forte": 3,
+  };
+
+  const filterActivities = () => {
+    return activities.filter((activity) => {
+      const distanceRange = getDistanceRange(filters.distance);
+  
+      // Vérifie et mappes la sensation si elle est définie
+      const selectedSensation = filters.sensation ? sensationMapping[filters.sensation] : null;
+  
+      // Vérifie si l'activité correspond au filtre de distance et de sensation
+      const matchesDistance = !distanceRange || (activity.distance >= distanceRange[0] && activity.distance <= distanceRange[1]);
+      const matchesSensation = selectedSensation === null || activity.sensation === selectedSensation;
+  
+      return matchesDistance && matchesSensation;
+    });
+  };
+  
+  
+  const filteredActivities = filterActivities();
 
   return (
     <section id="results-section" className="w-full bg-gray-100 shadow-md p-4 rounded-lg ml-4">
-      <h2 className="text-xl font-bold mb-4">Résultats</h2>
-
+      <h2 className="text-xl font-bold mb-4">Résultats :</h2>
       <p className="text-gray-700 mb-4">
-        Les résultats de votre recherche apparaîtront ici.
+        {filteredActivities.length > 0
+          ? `Il y a ${filteredActivities.length} résultat${filteredActivities.length > 1 ? 's' : ''} correspondant${filteredActivities.length > 1 ? 's' : ''} à votre recherche.`
+          : 'Aucun résultat trouvé pour votre recherche.'
+        }
       </p>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {activities.length === 0 ? (
-          <p>Chargement des activités...</p>
+        {filteredActivities.length === 0 ? (
+          <p>Aucune activité trouvée.</p>
         ) : (
-          activities.map((activity) => (
+          filteredActivities.map((activity) => (
             <div key={activity.id} className="result-item p-4 border rounded-lg">
               <h3 className="text-lg font-semibold mt-2">{activity.name}</h3>
               <p className="text-gray-600">Location: {activity.location}</p>
               <p className="text-gray-600">Type: {activity.type}</p>
-
-              {/* Affichage de l'image */}
               {activity.url_img && (
                 <img
                   src={activity.url_img}
@@ -43,8 +75,6 @@ function Results() {
                   className="w-full h-32 object-cover mt-2"
                 />
               )}
-
-              {/* Lien vers l'activité */}
               {activity.url_site && (
                 <a
                   href={activity.url_site}

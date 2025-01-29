@@ -24,7 +24,7 @@ const SensationChecklist = ({ onFilterChange }) => {
           onChange={handleSensationChange}>
           <option value="">Tout afficher</option>
           <option value="Légère">Légère</option>
-          <option value="Modérée">Modérée</option>
+          <option value="Moyenne">Moyenne</option> 
           <option value="Forte">Forte</option>
           <option value="Très forte">Très forte</option>
         </select>

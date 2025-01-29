@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Checklist({ onFilterChange }) {
-  const [checkedItem, setCheckedItem] = useState(null); // On stocke une seule valeur à la fois
+  const [checkedItem, setCheckedItem] = useState(null);
 
   const handleChange = (event) => {
     const value = event.target.value;
     setCheckedItem((prevCheckedItem) => {
-      const newCheckedItem = event.target.checked ? value : null; // Si décoché, on remet à null
-      onFilterChange(newCheckedItem); // On notifie le parent avec le filtre sélectionné
+      const newCheckedItem = event.target.checked ? value : null;
+      // On notifie le parent avec le filtre sélectionné (distance)
+      onFilterChange("distance", newCheckedItem);
       return newCheckedItem;
     });
   };
@@ -60,7 +61,6 @@ function Checklist({ onFilterChange }) {
           />
           <label htmlFor="item4" className="leading-5">&gt;25</label>
         </li>
-        
       </ul>
     </div>
   );

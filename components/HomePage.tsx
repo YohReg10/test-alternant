@@ -5,15 +5,20 @@ import Results from "../components/Results";
 import SensationChecklist from "../components/SensationChecklist";
 
 function HomePage() {
-  const [filters, setFilters] = useState(null); // On initialise filters à null
+  const [filters, setFilters] = useState({
+    distance: "", // Filtre pour la distance
+    sensation: "" // Filtre pour la sensation
+  });
 
-  const handleFilterChange = (newFilter) => {
-    setFilters(newFilter); // On met à jour le filtre avec la nouvelle valeur
+  const handleFilterChange = (filterType, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: value,
+    }));
   };
 
   return (
     <div id="layout-page" className="bg-blue-50 h-screen">
-
       {/* Header et ruban supérieur */}
       <div id="header-ruban" className="text-black">
         <Header />
@@ -24,13 +29,13 @@ function HomePage() {
 
       {/* Contenu principal du site */}
       <div id="site-content" className="flex flex-row gap-4 p-4">
-
-         {/* Section gauche : Checklist (parent) */}
-         <div id="checklist-section" className="w-1/4">
+        {/* Section gauche : Checklist (parent) */}
+        <div id="checklist-section" className="w-1/4">
           <div className="flex flex-col gap-6">
-            {/* Enfant : Sensation Checklist */}
+            {/* Enfant : Checklist pour la distance */}
             <Checklist onFilterChange={handleFilterChange} />
-            <SensationChecklist />
+            {/* Enfant : Sensation Checklist */}
+            <SensationChecklist onFilterChange={handleFilterChange} />
           </div>
         </div>
 

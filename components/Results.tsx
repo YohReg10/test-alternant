@@ -8,6 +8,7 @@ function Results({ filters }) {
       try {
         const response = await fetch('/api/activities');
         const data = await response.json();
+        console.log("Données reçues :", data);
         setActivities(data);
       } catch (error) {
         console.error('Error fetching activities:', error);
@@ -17,24 +18,46 @@ function Results({ filters }) {
     fetchActivities();
   }, []);
 
-  // Fonction de filtrage
+  // Convertir le filtre "distance" en un intervalle
+  const getDistanceRange = (filter) => {
+    if (!filter || filter === "null") return null;
+    if (filter.includes("<")) return [0, 5]; // "<5km"
+    if (filter.includes(">")) return [50, Infinity]; // ">50km"
+
+    const parts = filter.match(/\d+/g); // Extrait les nombres (ex: "5-15km" -> ["5", "15"])
+    if (parts && parts.length === 2) {
+      return [parseFloat(parts[0]), parseFloat(parts[1])]; // [5, 15]
+    }
+    return null;
+  };
+
+  // Dictionnaire de correspondance pour la sensation
+  const sensationMapping = {
+    "Légère": 0,
+    "Moyenne": 1,
+    "Forte": 2,
+    "Très forte": 3,
+  };
+
   const filterActivities = () => {
-    if (!filters) return activities; // Si aucun filtre n'est sélectionné
+    console.log("Filtres actifs :", filters);
 
     return activities.filter((activity) => {
-      const activityDistance = parseFloat(activity.distance);
-      switch (filters) {
-        case "<5km":
-          return activityDistance < 5;
-        case "5-15km":
-          return activityDistance >= 5 && activityDistance < 15;
-        case "15-25km":
-          return activityDistance >= 15 && activityDistance < 25;
-        case ">25km":
-          return activityDistance >= 25;
-        default:
-          return true;
-      }
+      console.log(`Analyse de ${activity.name} - Distance: ${activity.distance}, Sensation: ${activity.sensation}`);
+
+      // Gestion du filtre Distance
+      const distanceRange = getDistanceRange(filters.distance);
+      const matchesDistance = distanceRange
+        ? activity.distance >= distanceRange[0] && activity.distance <= distanceRange[1]
+        : true;
+
+      // Gestion du filtre Sensation
+      const selectedSensation = sensationMapping[filters.sensation]; // Convertir la sensation texte en nombre
+      const matchesSensation = selectedSensation !== undefined
+        ? activity.sensation === selectedSensation
+        : true;
+
+      return matchesDistance && matchesSensation;
     });
   };
 
@@ -44,9 +67,8 @@ function Results({ filters }) {
     <section id="results-section" className="w-full bg-gray-100 shadow-md p-4 rounded-lg ml-4">
       <h2 className="text-xl font-bold mb-4">Résultats :</h2>
 
-      {/* Affichage du nombre de résultats */}
       <p className="text-gray-700 mb-4">
-        {filteredActivities.length > 0 
+        {filteredActivities.length > 0
           ? `Il y a ${filteredActivities.length} résultat${filteredActivities.length > 1 ? 's' : ''} correspondant${filteredActivities.length > 1 ? 's' : ''} à votre recherche.`
           : 'Aucun résultat trouvé pour votre recherche.'
         }
@@ -54,7 +76,7 @@ function Results({ filters }) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredActivities.length === 0 ? (
-          <p>Chargement des activités...</p>
+          <p>Aucune activité trouvée.</p>
         ) : (
           filteredActivities.map((activity) => (
             <div key={activity.id} className="result-item p-4 border rounded-lg">
@@ -62,7 +84,6 @@ function Results({ filters }) {
               <p className="text-gray-600">Location: {activity.location}</p>
               <p className="text-gray-600">Type: {activity.type}</p>
 
-              {/* Affichage de l'image */}
               {activity.url_img && (
                 <img
                   src={activity.url_img}
@@ -71,7 +92,6 @@ function Results({ filters }) {
                 />
               )}
 
-              {/* Lien vers l'activité */}
               {activity.url_site && (
                 <a
                   href={activity.url_site}

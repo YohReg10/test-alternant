@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 // Instancie PrismaClient
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
       console.log("Testing Prisma connection...");

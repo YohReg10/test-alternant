@@ -1,12 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client'
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
 
 // Instancie PrismaClient
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
+      console.log("Testing Prisma connection...");
+      await prisma.$connect(); // Teste la connexion à la BDD
+      console.log("Prisma connected successfully.");
+      
       console.log("Fetching activities...");
       const activities = await prisma.activity.findMany({
         select: {
@@ -22,7 +26,6 @@ export default async function handler(req, res) {
         }
       });
 
-      // Ajouter un contrôle pour vérifier que activities est bien un tableau
       if (Array.isArray(activities)) {
         console.log("Activities fetched successfully", activities);
         res.status(200).json(activities);
@@ -32,7 +35,9 @@ export default async function handler(req, res) {
       }
     } catch (error) {
       console.error("Error fetching activities:", error);
-      res.status(500).json({ error: 'Failed to fetch activities' });
+      res.status(500).json({ error: 'Failed to fetch activities', details: error.message });
+    } finally {
+      await prisma.$disconnect(); // Ferme la connexion à Prisma après usage
     }
   } else {
     res.status(405).json({ error: 'Method not allowed' });

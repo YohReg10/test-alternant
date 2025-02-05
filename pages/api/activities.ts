@@ -7,7 +7,10 @@ const prisma = new PrismaClient()
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      // Sélection explicite des champs pour éviter tout oubli
+      console.log("🔍 Testing Prisma connection...");
+      await prisma.$connect(); // Vérifie la connexion à la base
+
+      console.log("✅ Connected to the database. Fetching activities...");
       const activities = await prisma.activity.findMany({
         select: {
           id: true,
@@ -17,19 +20,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           distance: true,
           environment: true,
           sensation: true,
-          url_site: true,    // Assure-toi que l'URL est bien sélectionnée
-          url_img: true // Assure-toi que l'URL de l'image est bien sélectionnée
+          url_site: true,
+          url_img: true,
         }
-      })
+      });
 
-      // Renvoie les données sous forme de JSON
-      res.status(200).json(activities)
+      if (Array.isArray(activities)) {
+        console.log("✅ Activities fetched successfully", activities);
+        res.status(200).json(activities);
+      } else {
+        console.error("⚠️ Activities is not an array", activities);
+        res.status(500).json({ error: 'Unexpected response format' });
+      }
     } catch (error) {
-      // En cas d'erreur, renvoie une erreur avec le statut 500
-      res.status(500).json({ error: 'Failed to fetch activities' })
+      console.error("❌ Error fetching activities:", error);
+      res.status(500).json({ error: 'Failed to fetch activities', details: error.message });
+    } finally {
+      await prisma.$disconnect(); // Déconnexion propre de Prisma
     }
   } else {
-    // Si la méthode n'est pas GET, renvoie une erreur "Method Not Allowed"
-    res.status(405).json({ error: 'Method not allowed' })
+    res.status(405).json({ error: 'Method not allowed' });
   }
 }

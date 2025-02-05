@@ -8,15 +8,21 @@ function Results({ filters }) {
       try {
         const response = await fetch('/api/activities');
         const data = await response.json();
-        setActivities(data);
+  
+        // Vérifie que les données reçues sont bien un tableau avant de les mettre à jour
+        if (Array.isArray(data)) {
+          setActivities(data);
+        } else {
+          console.error("Les données reçues ne sont pas un tableau", data);
+        }
       } catch (error) {
         console.error('❌ Erreur lors du fetch des activités :', error);
       }
     };
-
+  
     fetchActivities();
   }, []);
-
+  
   const getDistanceRange = (filter) => {
     if (!filter || filter === "null") return null;
     if (filter.includes("<")) return [0, 5];
@@ -33,13 +39,16 @@ function Results({ filters }) {
   };
 
   const filterActivities = () => {
+    if (!Array.isArray(activities)) {
+      console.error("activities n'est pas un tableau");
+      return [];  // Si ce n'est pas un tableau, retourne un tableau vide
+    }
+  
     return activities.filter((activity) => {
       const distanceRange = getDistanceRange(filters.distance);
   
-      // Vérifie et mappes la sensation si elle est définie
       const selectedSensation = filters.sensation ? sensationMapping[filters.sensation] : null;
   
-      // Vérifie si l'activité correspond au filtre de distance et de sensation
       const matchesDistance = !distanceRange || (activity.distance >= distanceRange[0] && activity.distance <= distanceRange[1]);
       const matchesSensation = selectedSensation === null || activity.sensation === selectedSensation;
   
